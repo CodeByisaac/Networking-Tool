@@ -9,5 +9,4 @@ public:
 private:
   using tcp = boost::asio::ip::tcp;
   tcp::acceptor acceptor_;
-  void handle_client(tcp::socket socket);
 };
