@@ -1,5 +1,6 @@
 #pragma once
 #include <boost/asio.hpp>
+#include "room.hpp"
 
 class Server {
 public:
@@ -9,4 +10,5 @@ public:
 private:
   using tcp = boost::asio::ip::tcp;
   tcp::acceptor acceptor_;
+  Room room_;
 };
