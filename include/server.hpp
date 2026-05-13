@@ -1,5 +1,6 @@
 #pragma once
 #include <boost/asio.hpp>
+#include <cstdint>
 #include "room.hpp"
 
 class Server {
@@ -11,4 +12,5 @@ private:
   using tcp = boost::asio::ip::tcp;
   tcp::acceptor acceptor_;
   Room room_;
+  std::uint64_t next_client_id_{1};
 };

@@ -10,7 +10,8 @@ Server::Server(boost::asio::io_context& io, short port) : acceptor_(io, tcp::end
 void Server::start_accept() {
   acceptor_.async_accept([this](std::error_code er, tcp::socket socket) {
     if (!er) {
-      std::make_shared<Session>(std::move(socket), room_)->start(); 
+      const auto id = next_client_id_++;
+      std::make_shared<Session>(std::move(socket), room_, id)->start();
     }
     start_accept();
   });

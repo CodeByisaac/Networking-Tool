@@ -2,11 +2,11 @@
 #include "room.hpp"
 #include <iostream>
 
-Session::Session(tcp::socket socket, Room& room): socket_(std::move(socket)), room_(room){
-}
+Session::Session(tcp::socket socket, Room& room, std::uint64_t client_id)
+    : socket_(std::move(socket)), room_(room), client_id_(client_id) {}
 
 void Session::start(){
-  std::cout << "Client Connected" << std::endl;
+  std::cout << "Client " << client_id_ << " connected" << std::endl;
   room_.join(shared_from_this());
   do_read();
 }
@@ -22,7 +22,7 @@ void Session::do_read(){
       do_read();
     } else {
       room_.leave(self);
-      std::cout << "Client Disconnected" << std::endl;
+      std::cout << "Client " << client_id_ << " disconnected" << std::endl;
     }});
   }
 
