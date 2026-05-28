@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/mnt/f/projects/Networking-Tool/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

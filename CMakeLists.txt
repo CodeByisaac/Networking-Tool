@@ -16,3 +16,13 @@ target_link_libraries(${PROJECT_NAME}
   Boost::filesystem
   pthread
 )
+
+option(SANITIZE_THREAD "Build with ThreadSanitizer (Clang/GCC only)" OFF)
+
+if(SANITIZE_THREAD)
+  if(NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    message(FATAL_ERROR "ThreadSanitizer requires Clang or GCC (use WSL: -DCMAKE_CXX_COMPILER=clang++)")
+  endif()
+  target_compile_options(${PROJECT_NAME} PRIVATE -fsanitize=thread -g -O1 -fno-omit-frame-pointer)
+  target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=thread)
+endif()
