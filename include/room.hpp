@@ -1,6 +1,7 @@
 #pragma once
 #include <set>
 #include <memory>
+#include <mutex>
 #include <string>
 
 class Session;
@@ -12,5 +13,6 @@ public:
   void broadcast(const std::string& message, std::shared_ptr<Session> sender);
 
 private:
+  std::mutex sessions_mutex;
   std::set<std::shared_ptr<Session>> sessions_;
 };
