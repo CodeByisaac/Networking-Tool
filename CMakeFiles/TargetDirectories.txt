@@ -1,3 +1,0 @@
-/mnt/f/projects/Networking-Tool/CMakeFiles/Networking-Tool.dir
-/mnt/f/projects/Networking-Tool/CMakeFiles/edit_cache.dir
-/mnt/f/projects/Networking-Tool/CMakeFiles/rebuild_cache.dir
