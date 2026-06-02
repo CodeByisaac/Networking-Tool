@@ -27,11 +27,22 @@ void Session::do_read(){
   }
 
 void Session::deliver(const std::string& message){
-  do_write(message);
+  bool was_idle = writeq.empty();
+  writeq.push_back(message);
+  if (was_idle) {
+    do_write();
+  }
 }
 
-void Session::do_write(const std::string& message) {
+void Session::do_write() {
   auto self = shared_from_this();
-  boost::asio::async_write(socket_, boost::asio::buffer(message), [this, self](std::error_code er, std::size_t){
+  boost::asio::async_write(socket_, boost::asio::buffer(writeq.front()), [this, self](std::error_code er, std::size_t){
+    if (!er) {
+      writeq.pop_front();
+      if (!writeq.empty()) do_write();
+    } else {
+        room_.leave(self);
+        std::cout << "Client" << client_id_ << "disconnected" << std::endl;
+      }
   });
 }

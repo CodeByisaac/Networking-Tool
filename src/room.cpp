@@ -16,8 +16,7 @@ void Room::broadcast(const std::string& message, std::shared_ptr<Session> sender
   std::unique_lock<std::mutex> lock(sessions_mutex);
   auto snapshot = sessions_;
   lock.unlock();
-  const std::string out =
-      "Client " + std::to_string(sender->id()) + ": " + message;
+  const std::string out = "Client " + std::to_string(sender->id()) + ": " + message;
   for (auto & s : snapshot) {
     if (s != sender) {
       s->deliver(out);

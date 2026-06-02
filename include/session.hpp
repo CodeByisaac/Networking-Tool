@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <array>
+#include <deque>
 
 class Room;
 
@@ -14,6 +15,7 @@ public:
   void start();
   void deliver(const std::string& message);
   std::uint64_t id() const { return client_id_; }
+  std::deque<std::string> writeq;
 
 private:
   tcp::socket socket_;
@@ -22,5 +24,5 @@ private:
   std::array<char, 1024> buffer_;
   
   void do_read();
-  void do_write(const std::string& message);
+  void do_write();
 };
