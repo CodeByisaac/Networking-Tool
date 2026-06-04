@@ -9,4 +9,4 @@ Multithreaded TCP server built in C++20 using Boost.Asio, capable of handling 30
 # Architecture
 One `Server` accepts clients; each client gets a `Session` for async I/O; all sessions share one `Room` for join/leave and broadcast.
 
-<img width="456" height="690" alt="image" src="https://github.com/user-attachments/assets/8fed56b4-5b9d-4f2b-af33-b276c9186c27" />
+<img width="448" height="699" alt="image" src="https://github.com/user-attachments/assets/9edfde7b-34d0-41c2-bb67-73ec65796ce7" />
