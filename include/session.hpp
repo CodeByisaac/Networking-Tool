@@ -15,9 +15,10 @@ public:
   void start();
   void deliver(const std::string& message);
   std::uint64_t id() const { return client_id_; }
-  std::deque<std::string> writeq;
 
 private:
+  boost::asio::strand<tcp::socket::executor_type>strand_;
+  std::deque<std::string> writeq;
   tcp::socket socket_;
   Room& room_;
   std::uint64_t client_id_;
