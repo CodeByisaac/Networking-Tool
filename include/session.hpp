@@ -17,9 +17,9 @@ public:
   std::uint64_t id() const { return client_id_; }
 
 private:
-  boost::asio::strand<tcp::socket::executor_type>strand_;
-  std::deque<std::string> writeq;
   tcp::socket socket_;
+  boost::asio::strand<tcp::socket::executor_type> strand_;
+  std::deque<std::string> writeq;
   Room& room_;
   std::uint64_t client_id_;
   std::array<char, 1024> buffer_;

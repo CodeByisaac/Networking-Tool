@@ -3,7 +3,10 @@
 #include <iostream>
 
 Session::Session(tcp::socket socket, Room& room, std::uint64_t client_id)
-    : socket_(std::move(socket)), room_(room), client_id_(client_id), strand_(boost::asio::make_strand(socket_.get_executor())){}
+    : socket_(std::move(socket)),
+      strand_(boost::asio::make_strand(socket_.get_executor())),
+      room_(room),
+      client_id_(client_id) {}
 
 void Session::start(){
   std::cout << "Client " << client_id_ << " connected" << std::endl;
