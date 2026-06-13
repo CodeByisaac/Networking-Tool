@@ -23,9 +23,15 @@ void Session::do_read(){
   socket_.async_read_some(boost::asio::buffer(buffer_), 
   boost::asio::bind_executor(strand_, [this, self](boost::system::error_code er , std::size_t length){
       if (!er) {
-        //std::cout << "Recieved: " << std::string(buffer_.data(), length) << std::endl;
-        std::string msg(buffer_.data(), length);
-        room_.broadcast(msg,self);
+        read_buffer_.append(buffer_.data(), length);
+        std::size_t pos = 0;
+        while ((pos = read_buffer_.find('\n', pos)) != std::string::npos){
+          std::string line = read_buffer_.substr(0, pos);
+          if (!line.empty() && line.back() == '\r') line.pop_back(); //handles windows "\r\n"
+          room_.broadcast(line, self);
+          read_buffer_.erase(0, pos + 1);
+          pos = 0;
+        }
         do_read();
       } else {
         room_.leave(self);

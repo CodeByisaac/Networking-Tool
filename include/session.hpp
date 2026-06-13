@@ -23,6 +23,7 @@ private:
   Room& room_;
   std::uint64_t client_id_;
   std::array<char, 1024> buffer_;
+  std::string read_buffer_;
   
   void do_read();
   void do_write();
