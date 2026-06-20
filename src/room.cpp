@@ -13,14 +13,18 @@ void Room::leave(std::shared_ptr<Session> session) {
 }
 
 void Room::broadcast(const std::string& message, std::shared_ptr<Session> sender) {
-  std::unique_lock<std::mutex> lock(sessions_mutex);
-  auto snapshot = sessions_;
-  lock.unlock();
+  std::vector<std::shared_ptr<Session>> snapshot;
+  {
+    std::lock_guard<std::mutex> lock(sessions_mutex);
+    snapshot.reserve(sessions_.size());
+    for (const auto& s : sessions_){
+      if (s!=sender) snapshot.push_back(s);
+    }
+  }
+
   const std::string out = "Client " + std::to_string(sender->id()) + ": " + message;
   for (auto & s : snapshot) {
-    if (s != sender) {
       s->deliver(out);
-    }
   }
 }
   
