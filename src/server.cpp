@@ -11,7 +11,7 @@ void Server::start_accept() {
   acceptor_.async_accept([this](std::error_code er, tcp::socket socket) {
     if (!er) {
       const auto id = next_client_id_++;
-      std::make_shared<Session>(std::move(socket), room_, id)->start();
+      std::make_shared<Session>(std::move(socket), room_manager_, id)->start();
     }
     start_accept();
   });
